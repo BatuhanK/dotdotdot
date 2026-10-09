@@ -1,0 +1,46 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Top level: local development (`pnpm dev`). Deploys use `env.production` below.
+  "name": "dotdotdot",
+  "main": "./worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    // The React app. Unknown paths fall back to index.html (client-side routing).
+    "not_found_handling": "single-page-application",
+    "binding": "ASSETS",
+    // The Worker answers the API, and adds link-preview tags to the home page, the editor and share pages.
+    "run_worker_first": ["/api/*", "/s/*", "/", "/app"],
+  },
+  // Shared projects (JSON) and their media (photos, avatars, background videos, music, preview image).
+  "kv_namespaces": [{ "binding": "SHARES" }],
+  "r2_buckets": [{ "binding": "MEDIA" }],
+  // Per-IP limits per minute: share writes, and media uploads (one publish = 1 write + 1 upload per file).
+  // A namespace_id must be unique within a Cloudflare account.
+  "ratelimits": [
+    { "name": "SHARE_LIMIT", "namespace_id": "4801", "simple": { "limit": 10, "period": 60 } },
+    { "name": "UPLOAD_LIMIT", "namespace_id": "4802", "simple": { "limit": 120, "period": 60 } },
+  ],
+  // Per-IP daily budgets for new shares and uploaded bytes (worker/quota.ts, amounts in worker/limits.ts).
+  "durable_objects": { "bindings": [{ "name": "QUOTA", "class_name": "Quota" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Quota"] }],
+  "observability": { "enabled": true },
+
+  "env": {
+    // The official site, deployed with `pnpm run deploy`. To deploy your own copy, change these to your account
+    // and domain, or delete account_id, routes, the KV id and the bucket name: Wrangler then deploys to
+    // workers.dev and creates the KV namespace and the R2 bucket for you.
+    "production": {
+      "name": "dotdotdot",
+      "account_id": "466c25d979dc5023eb8dcd71fdf2dbd4",
+      "routes": [{ "pattern": "dotdotdot.batuhan.org", "custom_domain": true }],
+      "kv_namespaces": [{ "binding": "SHARES", "id": "d3f5d78e330d4d46bcc18e1768f44791" }],
+      "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "dotdotdot-media" }],
+      "ratelimits": [
+        { "name": "SHARE_LIMIT", "namespace_id": "4801", "simple": { "limit": 10, "period": 60 } },
+        { "name": "UPLOAD_LIMIT", "namespace_id": "4802", "simple": { "limit": 120, "period": 60 } },
+      ],
+      "durable_objects": { "bindings": [{ "name": "QUOTA", "class_name": "Quota" }] },
+      "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Quota"] }],
+    },
+  },
+}

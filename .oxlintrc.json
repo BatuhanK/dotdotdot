@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "react"],
+  "categories": { "correctness": "error" },
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    // Settings code uses `cond && (set(…), mark(…))` on purpose.
+    "no-unused-expressions": "off",
+    // React Compiler checks; this app doesn't use the compiler and keeps refs to the latest callbacks.
+    "react/refs": "off",
+    "react/purity": "off",
+    "react/set-state-in-effect": "off"
+  },
+  "ignorePatterns": ["dist", ".wrangler", "public", "worker/worker-configuration.d.ts"]
+}

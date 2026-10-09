@@ -1,0 +1,14 @@
+node_modules
+dist
+.DS_Store
+*.local
+*.tsbuildinfo
+
+# Cloudflare: local KV / R2 / Durable Object state, and local secrets
+.wrangler
+.dev.vars*
+.env
+.env.*
+
+# Frames saved by the dev fidelity tools (src/dev/fidelity.ts)
+.shots

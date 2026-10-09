@@ -1,0 +1,6 @@
+dist
+.wrangler
+.shots
+public
+pnpm-lock.yaml
+worker/worker-configuration.d.ts

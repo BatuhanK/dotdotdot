@@ -1,0 +1,316 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-rounded: 'SF Pro Rounded', ui-rounded, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* The "sweet" palette shared by the landing page, the editor and share pages. */
+  --color-cream: #fffbf1;
+  --color-ink: #1a1200;
+  --color-honey: #ffb800;
+  --color-sun: #ffc933;
+  --color-butter: #fff1b8;
+  --color-peach: #ffe7c2;
+  --color-blush: #ffdde8;
+  --color-lilac: #e4dcff;
+  --color-mint: #d8f5de;
+  --color-cloud: #dcebff;
+}
+
+@font-face {
+  font-family: 'SF Pro Rounded';
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/SFProRounded-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'SF Pro Rounded';
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/SFProRounded-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'SF Pro Rounded';
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/SFProRounded-Semibold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'SF Pro Rounded';
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/SFProRounded-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'SF Pro Rounded';
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/SFProRounded-Heavy.woff2') format('woff2');
+}
+
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(127, 127, 127, 0.25);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------------------------------------------------------------- script syntax colors */
+/* Used by the script editor and the samples in the script guide (src/lib/script-language.ts). */
+.tok-me {
+  color: #0a84ff;
+  font-weight: 700;
+}
+.tok-name {
+  color: #e0457b;
+  font-weight: 700;
+}
+.tok-setting {
+  color: #7c3aed;
+  font-weight: 700;
+}
+.tok-comment {
+  color: #a8a29e;
+  font-style: italic;
+}
+.tok-tag,
+.tok-react,
+.tok-stamp {
+  border-radius: 6px;
+  padding: 1px 4px;
+  box-decoration-break: clone;
+}
+.tok-tag {
+  color: #8a5300;
+  background: #fff1b8;
+}
+.tok-react {
+  color: #c2185b;
+  background: #ffe4ee;
+}
+.tok-stamp {
+  color: #6d28d9;
+  background: #efe9ff;
+  font-weight: 600;
+}
+
+/* Same colors inside the message editor's text box: no padding, so the text lines up with the textarea. */
+.hl-tag {
+  color: #8a5300;
+  background: #fff1b8;
+  box-shadow: 0 0 0 1px #fff1b8;
+  border-radius: 4px;
+}
+.hl-react {
+  color: #c2185b;
+  background: #ffe4ee;
+  box-shadow: 0 0 0 1px #ffe4ee;
+  border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------- range inputs */
+/* Honey fill up to --fill (set inline), soft track after it, white knob. */
+.sweet-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: linear-gradient(to right, var(--color-honey) var(--fill, 0%), rgb(26 18 0 / 0.1) var(--fill, 0%));
+}
+.sweet-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow:
+    0 1px 4px rgb(26 18 0 / 0.3),
+    0 0 0 1px rgb(26 18 0 / 0.08);
+}
+.sweet-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow:
+    0 1px 4px rgb(26 18 0 / 0.3),
+    0 0 0 1px rgb(26 18 0 / 0.08);
+}
+.sweet-range::-moz-range-track {
+  background: transparent;
+}
+.sweet-range:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(255 184 0 / 0.35);
+}
+
+/* ---------------------------------------------------------------- landing animations */
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.92);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
+  50% {
+    transform: translateY(-14px) rotate(var(--r, 0deg));
+  }
+}
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes dot-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  30% {
+    transform: translateY(-5px);
+    opacity: 1;
+  }
+}
+@keyframes blob {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -20px) scale(1.08);
+  }
+  66% {
+    transform: translate(-20px, 15px) scale(0.95);
+  }
+}
+@keyframes logo-dot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.25;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+/* The landing's hero phone flipping over to the other messenger. */
+@keyframes app-swap {
+  0% {
+    opacity: 0;
+    transform: perspective(900px) rotateY(-75deg) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.pop-in {
+  animation: pop-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.logo-dot {
+  animation: logo-dot 1.3s ease-in-out infinite;
+}
+.app-swap {
+  animation: app-swap 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.float-y {
+  animation: float-y 5s ease-in-out infinite;
+}
+.wiggle {
+  animation: wiggle 2.4s ease-in-out infinite;
+}
+.marquee {
+  animation: marquee 28s linear infinite;
+}
+.dot-bounce {
+  animation: dot-bounce 1.2s ease-in-out infinite;
+}
+.blob {
+  animation: blob 14s ease-in-out infinite;
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(28px) scale(0.97);
+  transition:
+    opacity 0.7s ease,
+    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+.squish {
+  transition:
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.25s ease;
+}
+.squish:hover {
+  transform: translateY(-2px) scale(1.035);
+}
+.squish:active {
+  transform: scale(0.96);
+}
+@media (prefers-reduced-motion: reduce) {
+  .pop-in,
+  .float-y,
+  .wiggle,
+  .marquee,
+  .dot-bounce,
+  .blob,
+  .logo-dot,
+  .app-swap {
+    animation: none !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
